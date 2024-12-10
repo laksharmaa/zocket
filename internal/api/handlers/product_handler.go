@@ -19,18 +19,19 @@ func NewProductHandler(productService *service.ProductService) *ProductHandler {
 }
 
 func (h *ProductHandler) CreateProduct(c *gin.Context) {
-    var product models.Product
-    if err := c.ShouldBindJSON(&product); err != nil {
+
+    var products models.Product
+    if err := c.ShouldBindJSON(&products); err != nil {
         c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
         return
     }
 
-    if err := h.productService.CreateProduct(c.Request.Context(), &product); err != nil {
+    if err := h.productService.CreateProduct(c.Request.Context(), &products); err != nil {
         c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
         return
     }
 
-    c.JSON(http.StatusCreated, product)
+    c.JSON(http.StatusCreated, products)
 }
 
 func (h *ProductHandler) GetProduct(c *gin.Context) {

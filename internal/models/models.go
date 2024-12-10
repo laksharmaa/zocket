@@ -23,5 +23,4 @@ type Product struct {
     ProductImages         []string  `gorm:"type:text[]"`
     CompressedProductImages []string `gorm:"type:text[]"`
     ProductPrice          float64   `gorm:"type:decimal(10,2);not null"`
-    User                  User      `gorm:"foreignKey:UserID"`
 }

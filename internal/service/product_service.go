@@ -26,6 +26,12 @@ func NewProductService(db *gorm.DB, cache *cache.RedisCache, queue *queue.Rabbit
 }
 
 func (s *ProductService) CreateProduct(ctx context.Context, product *models.Product) error {
+    // if table does not exist, create it
+    if !s.db.Migrator().HasTable(&models.Product{}) {
+        if err := s.db.Migrator().CreateTable(&models.Product{}); err != nil {
+            return err
+        }
+    }
     return s.db.Create(product).Error
 }
 
